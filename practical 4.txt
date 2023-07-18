@@ -1,0 +1,29 @@
+//  practical 04 ::::student information using file handling
+package com.rushipro;
+import java.util.*;
+import java.io.*;
+public class Main {
+
+    public static void main(String[] args)throws IOException {
+	// write your code here
+        Scanner sc=new Scanner(System.in);
+        System.out.println("Enter the Name : ");
+        String nm=sc.next();
+        System.out.println("Enter the Roll no : ");
+        int rn=sc.nextInt();
+        System.out.println("Enter the Class : ");
+        int c=sc.nextInt();
+        FileWriter fw=new FileWriter("Yash.txt");
+        fw.write("Name :"+nm+"\n");
+        fw.write("Roll no : "+rn+"\n");
+        fw.write("Class :"+ c+"\n");
+        fw.close();
+        System.out.println("File created successfully../n");
+        int ch;
+        FileReader fr=new FileReader("Yash.txt");
+        while((ch=fr.read())!=-1){
+            System.out.print((char)ch);
+        }
+        fr.close();
+    }
+}
