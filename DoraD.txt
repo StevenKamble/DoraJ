@@ -317,6 +317,14 @@ SELECT eid, GTS(103) AS total_salary
 FROM employee1;
 
 
+10) JSON
+
+JSON to import
+Type this before writing mongo in cmd
+mongoimport --db god --collection Plants --file "C:\data\data.json"
+db.Plants.find()
+
+
 12).Study of Open Source NOSQL Database: MongoDB (Installation, Basic CRUD operations, Execution)
 ANS:-
 1. Database Commands
