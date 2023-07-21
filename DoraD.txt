@@ -316,8 +316,28 @@ END;
 SELECT eid, GTS(103) AS total_salary
 FROM employee1;
 
+10) Trigger
 
-10) JSON
+CREATE OR REPLACE TRIGGER log_employee_changes
+AFTER INSERT OR UPDATE OR DELETE ON employees
+FOR EACH ROW
+DECLARE
+    change_description VARCHAR2(100);
+BEGIN
+    IF INSERTING THEN
+        change_description := 'New employee added: ' || :NEW.employee_name;
+    ELSIF UPDATING THEN
+        change_description := 'Employee with ID ' || :OLD.employee_id || ' updated';
+    ELSIF DELETING THEN
+        change_description := 'Employee with ID ' || :OLD.employee_id || ' deleted';
+    END IF;
+
+    -- Log the change to an audit table (you need to create the audit table beforehand)
+    INSERT INTO employee_audit_log (change_timestamp, description)
+    VALUES (SYSTIMESTAMP, change_description);
+END;
+
+11) JSON
 
 JSON to import
 Type this before writing mongo in cmd
