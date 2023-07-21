@@ -1,0 +1,67 @@
+import java.applet.Applet;
+import java.awt.Color;
+import java.awt.Graphics;
+
+public class ShapeMotionApplet extends Applet implements Runnable {
+    private int x, y; // Initial position of the shape
+    private int dx, dy; // Incremental steps for motion
+    private int delay = 20; // Delay between animation frames (in milliseconds)
+    private Thread animator;
+
+    public void init() {
+        // Set initial position and motion steps
+        x = 100;
+        y = 100;
+        dx = 2;
+        dy = 2;
+    }
+
+    public void start() {
+        if (animator == null) {
+            animator = new Thread(this);
+            animator.start();
+        }
+    }
+
+    public void stop() {
+        if (animator != null) {
+            animator = null;
+        }
+    }
+
+    public void run() {
+        while (Thread.currentThread() == animator) {
+            // Update the position of the shape
+            x += dx;
+            y += dy;
+
+            // Check for boundaries and reverse direction if needed
+            int width = getWidth();
+            int height = getHeight();
+            if (x <= 0 || x >= width) {
+                dx = -dx;
+            }
+            if (y <= 0 || y >= height) {
+                dy = -dy;
+            }
+
+            repaint();
+
+            try {
+                Thread.sleep(delay);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void paint(Graphics g) {
+        // Clear the applet's background
+        g.setColor(Color.WHITE);
+        g.fillRect(0, 0, getWidth(), getHeight());
+
+        // Draw a moving shape (you can change the shape as per your requirement)
+        g.setColor(Color.BLUE);
+        g.fillOval(x, y, 50, 50);
+    }
+}
